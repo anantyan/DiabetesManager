@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:focusable="true"
+    android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:paddingRight="8dp"
+    android:paddingLeft="8dp">
+
+    <TextView
+        android:id="@+id/_txt_nomor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:textStyle="bold"
+        android:text="Nomor"/>
+
+    <TextView
+        android:id="@+id/txtTitik"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_toEndOf="@id/_txt_nomor"
+        android:textStyle="bold"
+        android:text="."/>
+
+    <TextView
+        android:id="@+id/txtNamaKalori"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_toEndOf="@id/txtTitik"
+        android:text="Kalori :"/>
+
+    <TextView
+        android:id="@+id/_txt_target_kalori"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_toEndOf="@id/txtNamaKalori"
+        android:textStyle="bold"
+        android:text="Kalori"/>
+
+    <TextView
+        android:id="@+id/_txt_makanan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/_txt_nomor"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        android:text="Nama Makanan"/>
+
+    <TextView
+        android:id="@+id/_txt_jam"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:text="Jam"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_alignEnd="@id/_txt_makanan"/>
+</RelativeLayout>
