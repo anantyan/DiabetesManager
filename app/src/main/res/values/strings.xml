@@ -1,0 +1,42 @@
+<resources>
+    <string name="app_name">Diabetes Manager</string>
+
+    <string name="input_nomor_hp">Nomor HP</string>
+    <string name="input_re_nomor_hp">Re-Input Nomor HP</string>
+
+    <string name="btn_login">Login</string>
+    <string name="btn_register">Register</string>
+
+    <string name="judul_login">Form Login</string>
+    <string name="judul_register">Form Register</string>
+    <string name="judul_dashboard">Halaman Utama</string>
+    <string name="judul_input_kalori">Input Kalori</string>
+    <string name="judul_update_kalori">Update Kalori</string>
+    <string name="judul_laporan">Lihat Laporan</string>
+
+    <string name="action_inputKalori">Kalori Baru</string>
+    <string name="action_updateKalori">Masukan Makanan</string>
+    <string name="action_selectLaporan">Laporan</string>
+    <string name="action_about">Tentang Aplikasi</string>
+
+    <string-array name="spinner_jenis_kelamin">
+        <item>Pilihan...</item>
+        <item>Perempuan</item>
+        <item>Laki - laki</item>
+    </string-array>
+
+    <string-array name="spinner_aktifitas">
+        <item>Pilihan...</item>
+        <item>Ringan</item>
+        <item>Sedang</item>
+        <item>Berat</item>
+    </string-array>
+
+    <string-array name="spinner_hamil">
+        <item>Pilihan...</item>
+        <item>Trimester 1</item>
+        <item>Trimester 2</item>
+        <item>Trimester 3</item>
+        <item>Menyusui</item>
+    </string-array>
+</resources>
