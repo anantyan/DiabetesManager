@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_inputKalori"
+        android:orderInCategory="100"
+        android:title="@string/action_inputKalori"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_updateKalori"
+        android:orderInCategory="100"
+        android:title="@string/action_updateKalori"
+        app:showAsAction="never" />
+</menu>
