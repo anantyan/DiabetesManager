@@ -1,0 +1,6 @@
+<resources>
+    <string name="version">1.0 BETA</string>
+    <string name="app_name">Diabetes Manager</string>
+    <string name="title_activity_laporan_cetak">Cetak Laporan</string>
+    <string name="title_activity_laporan_cetak_last">Dokumen Laporan PDF</string>
+</resources>
