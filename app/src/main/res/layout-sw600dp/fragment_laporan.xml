@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="420dp"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_gravity="center"
+    tools:context=".fragment.LaporanFragment"
+    android:id="@+id/_laporan">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="102dp">
+
+        <TextView
+            android:id="@+id/_txt_data_kosong"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Data Kosong!"
+            android:layout_centerInParent="true"
+            android:textStyle="bold"
+            android:textSize="32sp"/>
+
+        <ProgressBar
+            android:id="@+id/_progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true" />
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/_swipe_refresh"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/_select_data"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:listitem="@layout/view_recycler_laporan"/>
+        </android.support.v4.widget.SwipeRefreshLayout>
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/_btn_calendar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="51dp"
+        android:text="Calendar"
+        android:textColor="@color/colorP2"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"/>
+
+    <Button
+        android:id="@+id/_btn_prev"
+        android:layout_width="52dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|left"
+        android:layout_marginBottom="51dp"
+        android:drawableLeft="@drawable/ic_keyboard_arrow_left_24dp"
+        android:textColor="@color/colorP2"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"/>
+
+    <Button
+        android:id="@+id/_btn_next"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:layout_width="52dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_marginBottom="51dp"
+        android:drawableRight="@drawable/ic_keyboard_arrow_right_24dp"
+        android:textColor="@color/colorP2" />
+
+    <Button
+        android:id="@+id/btn_cetak"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:text="Laporan Dokumen"
+        app:backgroundTint="@color/colorP2"
+        style="@style/Widget.AppCompat.Button.Colored"/>
+</android.support.design.widget.CoordinatorLayout>

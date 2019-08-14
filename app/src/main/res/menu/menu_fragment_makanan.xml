@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_sortNama"
+        android:orderInCategory="100"
+        android:title="Sort By Nama"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_sortKalori"
+        android:orderInCategory="100"
+        android:title="Sort By Kalori"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_pencarian"
+        android:title="Pencarian"
+        android:icon="@drawable/ic_search_24dp"
+        app:actionViewClass="android.support.v7.widget.SearchView"
+        app:showAsAction="always|collapseActionView"/>
+</menu>
