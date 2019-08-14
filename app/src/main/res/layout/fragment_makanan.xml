@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragment.MakananFragment"
+    android:id="@+id/_makanan">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="24sp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:text="Input Makanan waktu ini"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:text="Input Makanan" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:background="#ECEFF1"
+                    android:orientation="vertical"
+                    android:padding="4dp">
+
+                    <Spinner
+                        android:id="@+id/_input_makanan"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/_btn_save"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="16dp"
+                    android:text="Save"
+                    app:backgroundTint="@color/colorP1"
+                    style="@style/Widget.AppCompat.Button.Colored"/>
+            </LinearLayout>
+        </ScrollView>
+    </RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>
