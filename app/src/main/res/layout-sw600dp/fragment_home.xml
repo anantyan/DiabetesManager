@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.HomeFragment"
+    android:id="@+id/_home">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/_swipe_refresh"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:orientation="vertical">
+
+                    <android.support.v7.widget.CardView
+                        android:layout_width="420dp"
+                        android:layout_height="wrap_content"
+                        card_view:cardCornerRadius="4dp"
+                        card_view:cardElevation="2dp"
+                        card_view:cardUseCompatPadding="true">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="4dp"
+                            android:paddingTop="4dp"
+                            android:paddingRight="4dp"
+                            android:paddingBottom="4dp">
+
+                            <TextView
+                                android:id="@+id/_txt_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="8dp"
+                                android:layout_marginTop="12dp"
+                                android:text="Nama"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/_txt_nomor_hp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/_txt_name"
+                                android:layout_marginLeft="8dp"
+                                android:layout_marginTop="4dp"
+                                android:text="Nomor HP" />
+
+                            <ImageView
+                                android:id="@+id/_photo_data"
+                                android:layout_width="64dp"
+                                android:layout_height="64dp"
+                                android:layout_alignParentEnd="true"
+                                android:src="@mipmap/ic_launcher" />
+                        </RelativeLayout>
+                    </android.support.v7.widget.CardView>
+
+                    <android.support.v7.widget.CardView
+                        android:layout_width="420dp"
+                        android:layout_height="wrap_content"
+                        card_view:cardCornerRadius="8dp"
+                        card_view:cardElevation="2dp"
+                        card_view:cardUseCompatPadding="true">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="16dp"
+                                android:text="Target Kalori"
+                                android:textSize="24sp" />
+
+                            <TextView
+                                android:id="@+id/_txt_kalori"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:layout_marginBottom="16dp"
+                                android:textSize="18dp" />
+                        </LinearLayout>
+                    </android.support.v7.widget.CardView>
+
+                    <android.support.v7.widget.CardView
+                        android:layout_width="420dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        card_view:cardCornerRadius="8dp"
+                        card_view:cardElevation="2dp"
+                        card_view:cardUseCompatPadding="true">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="16dp"
+                                android:text="Kalori saat ini"
+                                android:textSize="24sp" />
+
+                            <TextView
+                                android:id="@+id/_txt_target_kalori"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:layout_marginBottom="16dp"
+                                android:textSize="18dp" />
+                        </LinearLayout>
+                    </android.support.v7.widget.CardView>
+
+                    <Button
+                        android:id="@+id/btn_obat"
+                        android:layout_width="420dp"
+                        android:layout_height="wrap_content"
+                        android:text="Minum Obat"
+                        android:backgroundTint="@color/colorP2"
+                        style="@style/Widget.AppCompat.Button.Colored"/>
+                </LinearLayout>
+            </ScrollView>
+        </android.support.v4.widget.SwipeRefreshLayout>
+    </RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>
