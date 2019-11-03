@@ -30,8 +30,8 @@ public class LoadImageUtil {
         RequestOptions requestOptions = new RequestOptions()
                 .format(DecodeFormat.PREFER_ARGB_8888)
                 .override(Target.SIZE_ORIGINAL)
-                .placeholder(R.color.colorP2)
-                .fallback(R.color.colorP2)
+                .placeholder(R.mipmap.ic_launcher)
+                .fallback(R.mipmap.ic_launcher)
                 .centerCrop()
                 .fitCenter();
         Glide.with(context)
