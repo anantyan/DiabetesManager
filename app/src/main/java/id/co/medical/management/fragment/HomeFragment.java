@@ -1,9 +1,11 @@
 package id.co.medical.management.fragment;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.RestrictionEntry;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -32,6 +34,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,22 +44,30 @@ import java.util.List;
 import java.util.Objects;
 
 import id.co.medical.management.R;
+import id.co.medical.management.activity.LoginActivity;
 import id.co.medical.management.activity.MainActivity;
+import id.co.medical.management.activity.ProfileActivity;
 import id.co.medical.management.api.AuthApi;
 import id.co.medical.management.api.KaloriApi;
 import id.co.medical.management.component.CekDataComponent;
 import id.co.medical.management.component.RecordsComponent;
 import id.co.medical.management.component.ResponseComponent;
 import id.co.medical.management.component.SharedPreferencesComponent;
+import id.co.medical.management.utils.LoadImageUtil;
 import id.co.medical.management.utils.RetrofitUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+import static id.co.medical.management.activity.ProfileActivity.EXTRA_NAME_PROFILE;
+import static id.co.medical.management.activity.ProfileActivity.EXTRA_NOMORHP_PROFILE;
+import static id.co.medical.management.activity.ProfileActivity.EXTRA_PHOTO_PROFILE;
+
 public class HomeFragment extends Fragment {
 
     TextView txtKalori, txtTargetKalori, txtName, txtNomorHP;
+    ImageView photoData;
     View rootView, rootLayout;
     SwipeRefreshLayout swipeRefreshLayout;
     Button btnObat;
@@ -88,6 +99,7 @@ public class HomeFragment extends Fragment {
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id._swipe_refresh);
         btnObat = (Button) rootView.findViewById(R.id.btn_obat);
         profileFragmentHome = (RelativeLayout) rootView.findViewById(R.id.profile_fragment_home);
+        photoData = (ImageView) rootView.findViewById(R.id._photo_data);
 
         String id = new SharedPreferencesComponent(this.getActivity()).getDataId(); // get data id
         new CekDataComponent(this.getActivity(), rootLayout).CekDataId(id); // cek apakah akun terblokir atau tidak
@@ -102,7 +114,7 @@ public class HomeFragment extends Fragment {
         swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
 
         minumObat();
-        profile();
+//        profile();
 
         return rootView;
     }
@@ -132,7 +144,14 @@ public class HomeFragment extends Fragment {
                                         RecordsComponent recordsComponent = records.get(0);
                                         String name = recordsComponent.getName();
                                         String nomorHP = recordsComponent.getNomorHP();
-                                        Toast.makeText(getActivity(), name + " " + nomorHP, Toast.LENGTH_SHORT).show();
+                                        String photoProfile = null;
+                                        Intent i = new Intent(rootView.getContext(), ProfileActivity.class);
+                                        Bundle b = new Bundle();
+                                        b.putString(EXTRA_NAME_PROFILE, name);
+                                        b.putString(EXTRA_NOMORHP_PROFILE, nomorHP);
+                                        b.putString(EXTRA_PHOTO_PROFILE, photoProfile);
+                                        i.putExtras(b);
+                                        startActivity(i);
                                     }
                                     break;
                             }
@@ -237,6 +256,7 @@ public class HomeFragment extends Fragment {
                         String name = recordsComponent.getName();
                         String nomorHP = recordsComponent.getNomorHP();
                         String targetKalori = recordsComponent.getTargetKalori();
+                        String photoProfile = null;
                         switch (error) {
                             case "1": {
                                 /*Custom title alert dialog*/
@@ -263,6 +283,8 @@ public class HomeFragment extends Fragment {
                                 txtName.setText(name);
                                 txtNomorHP.setText(nomorHP);
                                 txtTargetKalori.setText(targetKalori);
+                                LoadImageUtil l = new LoadImageUtil(rootView.getContext());
+                                l.setGlideWithAccent(photoProfile, photoData);
                                 break;
                             }
                             case "2": {
@@ -290,6 +312,8 @@ public class HomeFragment extends Fragment {
                                 txtName.setText(name);
                                 txtNomorHP.setText(nomorHP);
                                 txtTargetKalori.setText(targetKalori);
+                                LoadImageUtil l = new LoadImageUtil(rootView.getContext());
+                                l.setGlideWithAccent(photoProfile, photoData);
                                 break;
                             }
                             case "3": {
@@ -317,6 +341,8 @@ public class HomeFragment extends Fragment {
                                 txtName.setText(name);
                                 txtNomorHP.setText(nomorHP);
                                 txtTargetKalori.setText(targetKalori);
+                                LoadImageUtil l = new LoadImageUtil(rootView.getContext());
+                                l.setGlideWithAccent(photoProfile, photoData);
                                 break;
                             }
                             case "4":
@@ -324,6 +350,8 @@ public class HomeFragment extends Fragment {
                                 txtName.setText(name);
                                 txtNomorHP.setText(nomorHP);
                                 txtTargetKalori.setText(targetKalori);
+                                LoadImageUtil l = new LoadImageUtil(rootView.getContext());
+                                l.setGlideWithAccent(photoProfile, photoData);
                                 break;
                         }
                     }
@@ -357,8 +385,8 @@ public class HomeFragment extends Fragment {
         int id = item.getItemId();
         if(id == R.id.action_about){
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this.rootView.getContext());
-            alertDialogBuilder.setTitle("Tentang Aplikasi");
             alertDialogBuilder
+                    .setTitle("Tentang Aplikasi")
                     .setMessage("Diabetes Manager\n" +
                             "Applications version "+getString(R.string.version))
                     .setCancelable(false)

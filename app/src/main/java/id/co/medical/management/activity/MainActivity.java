@@ -59,8 +59,8 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         bottomNav.setOnNavigationItemSelectedListener(navBar);
-        //bottomNav.getMenu().findItem(R.id.nav_home).setChecked(true); // make checked Home Fragment
-        bottomNav.getMenu().findItem(R.id.nav_home).setEnabled(false); // make checked Home Fragment
+        bottomNav.getMenu().findItem(R.id.nav_home).setChecked(true); // make checked Home Fragment
+        //bottomNav.getMenu().findItem(R.id.nav_home).setEnabled(false); // make checked Home Fragment
 
         loadFragment(new HomeFragment()); // default Home Fragment
     }
@@ -80,10 +80,10 @@ public class MainActivity extends AppCompatActivity {
             getMenuChecked = menuItem.getItemId();
             for (int i=0; i<bottomNav.getMenu().size(); i++){
                 MenuItem menuT = bottomNav.getMenu().getItem(i);
-                boolean isEnable = menuT.getItemId() != getMenuChecked;
-                //boolean isChecked = menuT.getItemId() == getMenuChecked;
-                menuT.setEnabled(isEnable);
-                //menuT.setChecked(isChecked);
+                //boolean isEnable = menuT.getItemId() != getMenuChecked;
+                boolean isChecked = menuT.getItemId() == getMenuChecked;
+                //menuT.setEnabled(isEnable);
+                menuT.setChecked(isChecked);
             }
 
             switch (menuItem.getItemId()){
@@ -99,10 +99,8 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 case R.id.nav_olahraga:
                     selectFrag = new OlahragaFragment();
-                    alertFragment(
-                            selectFrag,
-                            "Apakah anda hari sedang Olahraga atau sedang Cek gula darah?",
-                            "Olahraga & Cek Gula");
+                    loadFragment(selectFrag);
+                    toolbar.setTitle("Olahraga & Cek Gula");
                     return true;
                 case R.id.nav_laporan:
                     selectFrag = new LaporanFragment();
@@ -111,10 +109,7 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 case R.id.nav_create:
                     selectFrag = new KaloriFragment();
-                    alertFragment(
-                            selectFrag,
-                            "Apakah anda ingin mengubah data?",
-                            "Kalori");
+                    loadFragment(selectFrag);
                     toolbar.setTitle("Kalori");
                     return true;
             }
@@ -126,30 +121,5 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.fragment_content, fragment);
         fragmentTransaction.commit();
-    }
-
-    private void alertFragment(Fragment fragment, String msg, String name){
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
-        alertDialogBuilder.setTitle("Konfirmasi");
-        alertDialogBuilder
-                .setMessage(msg)
-                .setCancelable(false)
-                .setPositiveButton("Iya", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        loadFragment(fragment);
-                        toolbar.setTitle(name);
-                    }
-                })
-                .setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent(MainActivity.this, MainActivity.class);
-                        startActivity(intent);
-                        overridePendingTransition(0,0);
-                        finish();
-                    }
-                });
-        AlertDialog alertDialog = alertDialogBuilder.create();
-        alertDialog.show();
     }
 }

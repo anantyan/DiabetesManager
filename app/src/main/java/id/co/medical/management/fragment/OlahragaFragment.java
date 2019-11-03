@@ -81,68 +81,85 @@ public class OlahragaFragment extends Fragment {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String[] valDurasiOlahraga = new String[]{"", "10 Menit", "15 Menit", "30 Menit", "1 Jam", "Lebih dari 1 Jam"};
-                String[] valGulaDarah = new String[]{"", "Gula Darah Puasa", "Gula Darah Sewaktu", "Gula Darah 2 Jam setelah makan"};
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(rootView.getContext());
+                alertDialogBuilder.setTitle("Konfirmasi");
+                alertDialogBuilder
+                        .setMessage("Apakah anda hari sedang Olahraga atau sedang Cek Gula darah?")
+                        .setCancelable(false)
+                        .setPositiveButton("Iya", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                String[] valDurasiOlahraga = new String[]{"", "10 Menit", "15 Menit", "30 Menit", "1 Jam", "Lebih dari 1 Jam"};
+                                String[] valGulaDarah = new String[]{"", "Gula Darah Puasa", "Gula Darah Sewaktu", "Gula Darah 2 Jam setelah makan"};
 
-                String id = new SharedPreferencesComponent(rootView.getContext()).getDataId();
-                String jenisOlahraga = inputJenisOlahraga.getText().toString().trim();
-                String durasiOlahraga = valDurasiOlahraga[inputDurasiOlahraga.getSelectedItemPosition()];
-                String gulaDarah = valGulaDarah[inputGulaDarah.getSelectedItemPosition()];
-                String hasilGulaDarah = inputHasilGulaDarah.getText().toString().trim();
+                                String dataId = new SharedPreferencesComponent(rootView.getContext()).getDataId();
+                                String jenisOlahraga = inputJenisOlahraga.getText().toString().trim();
+                                String durasiOlahraga = valDurasiOlahraga[inputDurasiOlahraga.getSelectedItemPosition()];
+                                String gulaDarah = valGulaDarah[inputGulaDarah.getSelectedItemPosition()];
+                                String hasilGulaDarah = inputHasilGulaDarah.getText().toString().trim();
 
-                if(jenisOlahraga.equals("")){
-                    Toast.makeText(rootView.getContext(),
-                            "Jenis Olahraga harus diisi!",
-                            Toast.LENGTH_LONG).show();
-                    inputJenisOlahraga.setError("Jenis Olahraga Darah harus diisi!");
-                    inputJenisOlahraga.requestFocus();
-                }else if(durasiOlahraga.equals("")){
-                    Toast.makeText(rootView.getContext(),
-                            "Durasi Olahraga harus diisi!",
-                            Toast.LENGTH_LONG).show();
-                    inputDurasiOlahraga.requestFocus();
-                }else {
-                    progressDialog = new ProgressDialog(rootView.getContext());
-                    progressDialog.setCancelable(false);
-                    progressDialog.setMessage("Tunggu...");
-                    progressDialog.show();
+                                if(jenisOlahraga.equals("")){
+                                    Toast.makeText(rootView.getContext(),
+                                            "Jenis Olahraga harus diisi!",
+                                            Toast.LENGTH_LONG).show();
+                                    inputJenisOlahraga.setError("Jenis Olahraga Darah harus diisi!");
+                                    inputJenisOlahraga.requestFocus();
+                                }else if(durasiOlahraga.equals("")){
+                                    Toast.makeText(rootView.getContext(),
+                                            "Durasi Olahraga harus diisi!",
+                                            Toast.LENGTH_LONG).show();
+                                    inputDurasiOlahraga.requestFocus();
+                                }else {
+                                    progressDialog = new ProgressDialog(rootView.getContext());
+                                    progressDialog.setCancelable(false);
+                                    progressDialog.setMessage("Tunggu...");
+                                    progressDialog.show();
 
-                    Retrofit retrofit = RetrofitUtil.getClient();
-                    KaloriApi kaloriApi = retrofit.create(KaloriApi.class);
-                    Call<ResponseComponent> call = kaloriApi.updateOlahraga(id, jenisOlahraga, durasiOlahraga, gulaDarah, hasilGulaDarah);
-                    call.enqueue(new Callback<ResponseComponent>() {
-                        @Override
-                        public void onResponse(Call<ResponseComponent> call, Response<ResponseComponent> response) {
-                            assert response.body() != null;
-                            String error = response.body().getError();
-                            String status = response.body().getStatus();
-                            progressDialog.dismiss();
-                            if (error.equals("1")) {
-                                Toast.makeText(rootView.getContext(), status, Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(rootView.getContext(), status, Toast.LENGTH_SHORT).show();
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<ResponseComponent> call, Throwable t) {
-                            progressDialog.dismiss();
-                            Snackbar.make(rootLayout, "Kesalahan pada jaringan!", Snackbar.LENGTH_LONG)
-                                    .setAction("Oke", new View.OnClickListener() {
+                                    Retrofit retrofit = RetrofitUtil.getClient();
+                                    KaloriApi kaloriApi = retrofit.create(KaloriApi.class);
+                                    Call<ResponseComponent> call = kaloriApi.updateOlahraga(dataId, jenisOlahraga, durasiOlahraga, gulaDarah, hasilGulaDarah);
+                                    call.enqueue(new Callback<ResponseComponent>() {
                                         @Override
-                                        public void onClick(View v) {
+                                        public void onResponse(Call<ResponseComponent> call, Response<ResponseComponent> response) {
+                                            assert response.body() != null;
+                                            String error = response.body().getError();
+                                            String status = response.body().getStatus();
+                                            progressDialog.dismiss();
+                                            if (error.equals("1")) {
+                                                Toast.makeText(rootView.getContext(), status, Toast.LENGTH_SHORT).show();
+                                            } else {
+                                                Toast.makeText(rootView.getContext(), status, Toast.LENGTH_SHORT).show();
+                                            }
                                         }
-                                    })
-                                    .setDuration(3000)
-                                    .show();
-                        }
-                    });
-                    /*Toast.makeText(rootView.getContext(), id+", "+
-                            jenisOlahraga+", "+
-                            durasiOlahraga+", "+
-                            gulaDarah+", "+
-                            hasilGulaDarah, Toast.LENGTH_SHORT).show();*/
-                }
+
+                                        @Override
+                                        public void onFailure(Call<ResponseComponent> call, Throwable t) {
+                                            progressDialog.dismiss();
+                                            Snackbar.make(rootLayout, "Kesalahan pada jaringan!", Snackbar.LENGTH_LONG)
+                                                    .setAction("Oke", new View.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(View v) {
+                                                        }
+                                                    })
+                                                    .setDuration(3000)
+                                                    .show();
+                                        }
+                                    });
+                                    /*Toast.makeText(rootView.getContext(), id+", "+
+                                            jenisOlahraga+", "+
+                                            durasiOlahraga+", "+
+                                            gulaDarah+", "+
+                                            hasilGulaDarah, Toast.LENGTH_SHORT).show();*/
+                                }
+                            }
+                        })
+                        .setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
             }
         });
     }

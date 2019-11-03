@@ -34,4 +34,19 @@ public interface AuthApi {
     Call<ResponseComponent> cekDataId(
             @Field("id") String id
     );
+
+    @FormUrlEncoded
+    @POST("?p=Auth&x=profile_update_nama")
+    Call<ResponseComponent> profileUpdateName(
+            @Field("id") String id,
+            @Field("nama") String name
+    );
+
+    @FormUrlEncoded
+    @POST("?p=Auth&x=profile_update_nomor")
+    Call<ResponseComponent> profileUpdateNomor(
+            @Field("id") String id,
+            @Field("nomor_hp") String nomorhp,
+            @Field("pin") String pin
+    );
 }

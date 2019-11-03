@@ -89,7 +89,6 @@ public class LoginActivity extends AppCompatActivity {
                             assert response.body() != null;
                             String error = response.body().getError();
                             String status = response.body().getStatus();
-                            records = response.body().getRecords();
                             progressDialog.dismiss();
                             if(response.isSuccessful()){
                                 if(error.equals("1")) {

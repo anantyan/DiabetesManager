@@ -48,7 +48,7 @@ public class LaporanCetakLastActivity extends AppCompatActivity {
         webSettings.setJavaScriptEnabled(true); // Untuk mengaktifkan javascript
         webSettings.getUseWideViewPort(); // Untuk support mediaquery
 
-        url = getIntent().getExtras().getString("keyData");
+        url = getIntent().getStringExtra("keyData");
 
         pdfViewer.setWebChromeClient(new WebChromeClient() {
             @Override

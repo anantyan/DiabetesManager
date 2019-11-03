@@ -84,87 +84,104 @@ public class KaloriFragment extends Fragment {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String id = new SharedPreferencesComponent(getActivity()).getDataId();
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(rootView.getContext());
+                alertDialogBuilder.setTitle("Konfirmasi");
+                alertDialogBuilder
+                        .setMessage("Apakah anda ingin mengubah data?")
+                        .setCancelable(false)
+                        .setPositiveButton("Iya", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                String dataId = new SharedPreferencesComponent(getActivity()).getDataId();
 
-                /*value for spinner*/
-                String[] valJenisKelamin = new String[]{"", "Perempuan", "Laki - laki"};
-                String[] valAktifitas = new String[]{"", "Ringan", "Sedang", "Berat"};
-                String[] valHamil = new String[]{"", "Trimester 1", "Trimester 2", "Trimester 3", "Menyusui"};
+                                /*value for spinner*/
+                                String[] valJenisKelamin = new String[]{"", "Perempuan", "Laki - laki"};
+                                String[] valAktifitas = new String[]{"", "Ringan", "Sedang", "Berat"};
+                                String[] valHamil = new String[]{"", "Trimester 1", "Trimester 2", "Trimester 3", "Menyusui"};
 
-                String umur = inputUmur.getText().toString().trim();
-                String tb = inputTB.getText().toString().trim();
-                String bb = inputBB.getText().toString().trim();
-                String jk = valJenisKelamin[inputJK.getSelectedItemPosition()];
-                String aktif = valAktifitas[inputAktif.getSelectedItemPosition()];
-                String hamil = valHamil[inputHamil.getSelectedItemPosition()];
+                                String umur = inputUmur.getText().toString().trim();
+                                String tb = inputTB.getText().toString().trim();
+                                String bb = inputBB.getText().toString().trim();
+                                String jk = valJenisKelamin[inputJK.getSelectedItemPosition()];
+                                String aktif = valAktifitas[inputAktif.getSelectedItemPosition()];
+                                String hamil = valHamil[inputHamil.getSelectedItemPosition()];
 
-                if(jk.equals("")){
-                    Toast.makeText(getActivity(),
-                            "Jenis Kelamin harus diisi!",
-                            Toast.LENGTH_LONG).show();
-                    inputJK.requestFocus();
-                }else if(umur.equals("")){
-                    Toast.makeText(getActivity(),
-                            "Umur harus diisi!",
-                            Toast.LENGTH_LONG).show();
-                    inputUmur.setError("Umur harus diisi!");
-                    inputUmur.requestFocus();
-                }else if(tb.equals("")){
-                    Toast.makeText(getActivity(),
-                            "Tinggi Badan harus diisi!",
-                            Toast.LENGTH_LONG).show();
-                    inputTB.setError("Tinggi Badan harus diisi!");
-                    inputTB.requestFocus();
-                }else if(bb.equals("")){
-                    Toast.makeText(getActivity(),
-                            "Berat Badan harus diisi!",
-                            Toast.LENGTH_LONG).show();
-                    inputBB.setError("Berat Badan harus diisi!");
-                    inputBB.requestFocus();
-                }else if(aktif.equals("")){
-                    Toast.makeText(getActivity(),
-                            "Aktifitas harus diisi!",
-                            Toast.LENGTH_LONG).show();
-                    inputAktif.requestFocus();
-                }else{
-                    progressDialog = new ProgressDialog(getActivity());
-                    progressDialog.setCancelable(false);
-                    progressDialog.setMessage("Tunggu...");
-                    progressDialog.show();
+                                if(jk.equals("")){
+                                    Toast.makeText(getActivity(),
+                                            "Jenis Kelamin harus diisi!",
+                                            Toast.LENGTH_LONG).show();
+                                    inputJK.requestFocus();
+                                }else if(umur.equals("")){
+                                    Toast.makeText(getActivity(),
+                                            "Umur harus diisi!",
+                                            Toast.LENGTH_LONG).show();
+                                    inputUmur.setError("Umur harus diisi!");
+                                    inputUmur.requestFocus();
+                                }else if(tb.equals("")){
+                                    Toast.makeText(getActivity(),
+                                            "Tinggi Badan harus diisi!",
+                                            Toast.LENGTH_LONG).show();
+                                    inputTB.setError("Tinggi Badan harus diisi!");
+                                    inputTB.requestFocus();
+                                }else if(bb.equals("")){
+                                    Toast.makeText(getActivity(),
+                                            "Berat Badan harus diisi!",
+                                            Toast.LENGTH_LONG).show();
+                                    inputBB.setError("Berat Badan harus diisi!");
+                                    inputBB.requestFocus();
+                                }else if(aktif.equals("")){
+                                    Toast.makeText(getActivity(),
+                                            "Aktifitas harus diisi!",
+                                            Toast.LENGTH_LONG).show();
+                                    inputAktif.requestFocus();
+                                }else{
+                                    progressDialog = new ProgressDialog(getActivity());
+                                    progressDialog.setCancelable(false);
+                                    progressDialog.setMessage("Tunggu...");
+                                    progressDialog.show();
 
-                    Retrofit retrofit = RetrofitUtil.getClient();
-                    KaloriApi kaloriApi = retrofit.create(KaloriApi.class);
-                    Call<ResponseComponent> call = kaloriApi.insertKalori(id, jk, umur, tb, bb, aktif, hamil);
-                    call.enqueue(new Callback<ResponseComponent>() {
+                                    Retrofit retrofit = RetrofitUtil.getClient();
+                                    KaloriApi kaloriApi = retrofit.create(KaloriApi.class);
+                                    Call<ResponseComponent> call = kaloriApi.insertKalori(dataId, jk, umur, tb, bb, aktif, hamil);
+                                    call.enqueue(new Callback<ResponseComponent>() {
 
-                        @Override
-                        public void onResponse(Call<ResponseComponent> call, Response<ResponseComponent> response) {
-                            assert response.body() != null;
-                            String error = response.body().getError();
-                            String status = response.body().getStatus();
-                            progressDialog.dismiss();
-                            if(error.equals("1")) {
-                                Toast.makeText(getActivity(), status, Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(getActivity(), status, Toast.LENGTH_SHORT).show();
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<ResponseComponent> call, Throwable t) {
-                            progressDialog.dismiss();
-                            Snackbar.make(rootLayout, "Kesalahan pada jaringan!", Snackbar.LENGTH_LONG)
-                                    .setAction("Oke", new View.OnClickListener() {
                                         @Override
-                                        public void onClick(View v) {
-
+                                        public void onResponse(Call<ResponseComponent> call, Response<ResponseComponent> response) {
+                                            assert response.body() != null;
+                                            String error = response.body().getError();
+                                            String status = response.body().getStatus();
+                                            progressDialog.dismiss();
+                                            if(error.equals("1")) {
+                                                Toast.makeText(getActivity(), status, Toast.LENGTH_SHORT).show();
+                                            } else {
+                                                Toast.makeText(getActivity(), status, Toast.LENGTH_SHORT).show();
+                                            }
                                         }
-                                    })
-                                    .setDuration(3000)
-                                    .show();
-                        }
-                    });
-                }
+
+                                        @Override
+                                        public void onFailure(Call<ResponseComponent> call, Throwable t) {
+                                            progressDialog.dismiss();
+                                            Snackbar.make(rootLayout, "Kesalahan pada jaringan!", Snackbar.LENGTH_LONG)
+                                                    .setAction("Oke", new View.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(View v) {
+
+                                                        }
+                                                    })
+                                                    .setDuration(3000)
+                                                    .show();
+                                        }
+                                    });
+                                }
+                            }
+                        })
+                        .setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
             }
         });
     }
