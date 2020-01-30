@@ -20,7 +20,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitUtil {
 
-    public static final String BASE_URL = "https://android.ayoberalih.com/versi-terbaru/";
+    public static final String BASE_URL = "https://rahasia-dong/versi-terbaru/";
     public static Retrofit retrofit = null;
 
     public static boolean checkClient() {
