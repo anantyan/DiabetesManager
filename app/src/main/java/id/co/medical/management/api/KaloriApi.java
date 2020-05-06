@@ -30,7 +30,8 @@ public interface KaloriApi {
     @POST("?p=Kalori&x=updateKalori")
     Call<ResponseComponent> updateKalori(
             @Field("id") String id,
-            @Field("nama_makanan") String namaMakanan
+            @Field("nama_makanan") String namaMakanan,
+            @Field("ukuranMakanan") String ukuranMakanan
     );
 
     @FormUrlEncoded

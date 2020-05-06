@@ -1,20 +1,18 @@
 package id.co.medical.management.fragment;
 
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.MenuItemCompat;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import com.google.android.material.snackbar.Snackbar;
+import androidx.fragment.app.Fragment;
+import androidx.core.view.MenuItemCompat;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.appcompat.app.AlertDialog;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -22,12 +20,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ProgressBar;
-import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -36,7 +29,6 @@ import java.util.List;
 
 import id.co.medical.management.R;
 import id.co.medical.management.adapter.MakananAdapter;
-import id.co.medical.management.api.KaloriApi;
 import id.co.medical.management.api.MakananApi;
 import id.co.medical.management.component.CekDataComponent;
 import id.co.medical.management.component.RecordsComponent;
@@ -126,7 +118,7 @@ public class MakananFragment extends Fragment {
                                 Collections.sort(records, new Comparator<RecordsComponent>() {
                                     @Override
                                     public int compare(RecordsComponent o1, RecordsComponent o2) {
-                                        return o1.getNamaMakanan().compareTo(o2.getNamaMakanan());
+                                        return o1.getUkuran_makanan().compareTo(o2.getNama_makanan());
                                     }
                                 });
                                 makananAdapter = new MakananAdapter(getActivity(), records);
@@ -173,8 +165,8 @@ public class MakananFragment extends Fragment {
                                 Collections.sort(records, new Comparator<RecordsComponent>() {
                                     @Override
                                     public int compare(RecordsComponent o1, RecordsComponent o2) {
-                                        String a = o1.getJmlKalori();
-                                        String b = o2.getJmlKalori();
+                                        String a = o1.getJumlah_kalori();
+                                        String b = o2.getJumlah_kalori();
                                         return (int) (Double.parseDouble(a)- Double.parseDouble(b));
                                     }
                                 });
@@ -222,8 +214,8 @@ public class MakananFragment extends Fragment {
                                 Collections.sort(records, new Comparator<RecordsComponent>() {
                                     @Override
                                     public int compare(RecordsComponent o1, RecordsComponent o2) {
-                                        String a = o1.getJmlKalori();
-                                        String b = o2.getJmlKalori();
+                                        String a = o1.getJumlah_kalori();
+                                        String b = o2.getJumlah_kalori();
                                         return (int) (Double.parseDouble(a)- Double.parseDouble(b));
                                     }
                                 });

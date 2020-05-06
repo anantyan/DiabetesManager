@@ -3,9 +3,9 @@ package id.co.medical.management.adapter;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.RecyclerView;
+import com.google.android.material.snackbar.Snackbar;
+import androidx.appcompat.app.AlertDialog;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,10 +51,10 @@ public class MakananAdapter extends RecyclerView.Adapter<MakananAdapter.ViewHold
             }else{
                 String filterPatern = constraint.toString().toLowerCase().trim();
                 for(RecordsComponent recordsComponent : recordsFull){
-                    if(recordsComponent.getNamaMakanan().toLowerCase().contains(filterPatern)){
+                    if(recordsComponent.getNama_makanan().toLowerCase().contains(filterPatern)){
                         filteredList.add(recordsComponent);
                     }
-                    if(recordsComponent.getJmlKalori().toLowerCase().contains(filterPatern)){
+                    if(recordsComponent.getJumlah_kalori().toLowerCase().contains(filterPatern)){
                         filteredList.add(recordsComponent);
                     }
                 }
@@ -103,8 +103,8 @@ public class MakananAdapter extends RecyclerView.Adapter<MakananAdapter.ViewHold
     @Override
     public void onBindViewHolder(MakananAdapter.ViewHolder viewHolder, int i) {
         RecordsComponent recordsComponent = records.get(i);
-        viewHolder.txtMakanan.setText(recordsComponent.getNamaMakanan());
-        viewHolder.txtJmlKalori.setText(recordsComponent.getJmlKalori());
+        viewHolder.txtMakanan.setText(recordsComponent.getNama_makanan());
+        viewHolder.txtJmlKalori.setText(recordsComponent.getJumlah_kalori());
 
         //how to make button onClick
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -127,60 +127,69 @@ public class MakananAdapter extends RecyclerView.Adapter<MakananAdapter.ViewHold
             public void onClick(View v) {
                 //String id = records.get(viewHolder.getAdapterPosition()).getId();
                 //Toast.makeText(context, id, Toast.LENGTH_SHORT).show();
+                final String id = new SharedPreferencesComponent(viewHolder.itemView.getContext()).getDataId();
+                final String namaMakanan = records.get(viewHolder.getAdapterPosition()).getNama_makanan();
+                final String[] ukuranMakanan = {"1 porsi", "3/4 porsi", "1/2 porsi", "1/3 porsi", "1/4 porsi"};
+                AlertDialog.Builder builder = new AlertDialog.Builder(viewHolder.itemView.getContext());
 
-                ProgressDialog progressDialog = new ProgressDialog(viewHolder.itemView.getContext());
-                progressDialog.setCancelable(false);
-                progressDialog.setMessage("Tunggu...");
-                progressDialog.show();
-
-                String id = new SharedPreferencesComponent(viewHolder.itemView.getContext()).getDataId();
-                String namaMakanan = records.get(viewHolder.getAdapterPosition()).getNamaMakanan();
-
-                Retrofit retrofit = RetrofitUtil.getClient();
-                KaloriApi kaloriApi = retrofit.create(KaloriApi.class);
-                Call<ResponseComponent> call = kaloriApi.updateKalori(id, namaMakanan);
-                call.enqueue(new Callback<ResponseComponent>() {
+                builder.setTitle("Pilih ukuran nyang dimakan");
+                builder.setItems(ukuranMakanan, new DialogInterface.OnClickListener() {
                     @Override
-                    public void onResponse(Call<ResponseComponent> call, Response<ResponseComponent> response) {
-                        String error = response.body() != null ? response.body().getError() : null;
-                        String status = response.body() != null ? response.body().getStatus() : null;
-                        progressDialog.dismiss();
-                        if(response.isSuccessful()){
-                            if(error != null){
-                                switch(error){
-                                    case "0":
-                                        Toast.makeText(viewHolder.itemView.getContext(), status, Toast.LENGTH_SHORT).show();
-                                        break;
-                                    case "1":
-                                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(viewHolder.itemView.getContext());
-                                        alertDialogBuilder.setTitle("Peringatan!");
-                                        alertDialogBuilder
-                                                .setMessage(status)
-                                                .setCancelable(false)
-                                                .setPositiveButton("Iya",new DialogInterface.OnClickListener() {
-                                                    public void onClick(DialogInterface dialog, int id) {
-                                                    }
-                                                });
-                                        AlertDialog alertDialog = alertDialogBuilder.create();
-                                        alertDialog.show();
-                                        break;
+                    public void onClick(DialogInterface dialog, int which) {
+                        //Toast.makeText(viewHolder.itemView.getContext(), id+" "+namaMakanan+" "+ukuranMakanan[which], Toast.LENGTH_SHORT).show();
+                        ProgressDialog progressDialog = new ProgressDialog(viewHolder.itemView.getContext());
+                        progressDialog.setCancelable(false);
+                        progressDialog.setMessage("Tunggu...");
+                        progressDialog.show();
+
+                        Retrofit retrofit = RetrofitUtil.getClient();
+                        KaloriApi kaloriApi = retrofit.create(KaloriApi.class);
+                        Call<ResponseComponent> call = kaloriApi.updateKalori(id, namaMakanan, ukuranMakanan[which]);
+                        call.enqueue(new Callback<ResponseComponent>() {
+                            @Override
+                            public void onResponse(Call<ResponseComponent> call, Response<ResponseComponent> response) {
+                                String error = response.body() != null ? response.body().getError() : null;
+                                String status = response.body() != null ? response.body().getStatus() : null;
+                                progressDialog.dismiss();
+                                if(response.isSuccessful()){
+                                    if(error != null){
+                                        switch(error){
+                                            case "0":
+                                                Toast.makeText(viewHolder.itemView.getContext(), status, Toast.LENGTH_SHORT).show();
+                                                break;
+                                            case "1":
+                                                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(viewHolder.itemView.getContext());
+                                                alertDialogBuilder.setTitle("Peringatan!");
+                                                alertDialogBuilder
+                                                        .setMessage(status)
+                                                        .setCancelable(false)
+                                                        .setPositiveButton("Iya",new DialogInterface.OnClickListener() {
+                                                            public void onClick(DialogInterface dialog, int id) {
+                                                            }
+                                                        });
+                                                AlertDialog alertDialog = alertDialogBuilder.create();
+                                                alertDialog.show();
+                                                break;
+                                        }
+                                    }
                                 }
                             }
-                        }
+                            @Override
+                            public void onFailure(Call<ResponseComponent> call, Throwable t) {
+                                progressDialog.dismiss();
+                                Snackbar.make(viewHolder.itemView, "Kesalahan pada jaringan!", Snackbar.LENGTH_LONG)
+                                        .setAction("Oke", new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                            }
+                                        })
+                                        .setDuration(3000)
+                                        .show();
+                            }
+                        });
+                        dialog.dismiss();
                     }
-                    @Override
-                    public void onFailure(Call<ResponseComponent> call, Throwable t) {
-                        progressDialog.dismiss();
-                        Snackbar.make(viewHolder.itemView, "Kesalahan pada jaringan!", Snackbar.LENGTH_LONG)
-                                .setAction("Oke", new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                    }
-                                })
-                                .setDuration(3000)
-                                .show();
-                    }
-                });
+                }).show();
             }
         });
     }

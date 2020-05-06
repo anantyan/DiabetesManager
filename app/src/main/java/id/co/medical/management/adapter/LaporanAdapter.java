@@ -1,13 +1,12 @@
 package id.co.medical.management.adapter;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -49,8 +48,14 @@ public class LaporanAdapter extends RecyclerView.Adapter<LaporanAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull final LaporanAdapter.ViewHolder viewHolder, int i) {
         RecordsComponent recordsComponent = records.get(i);
-        viewHolder.txtJmlKalori.setText(recordsComponent.getJmlKalori());
-        viewHolder.txtMakanan.setText(recordsComponent.getNamaMakanan());
+        if(recordsComponent.getUkuran_makanan().equals("")){
+            viewHolder.txtJmlKalori.setText(recordsComponent.getJumlah_kalori());
+        }else{
+            String a = recordsComponent.getJumlah_kalori();
+            String b = recordsComponent.getUkuran_makanan();
+            viewHolder.txtJmlKalori.setText(String.format("%s (%s)", a, b));
+        }
+        viewHolder.txtMakanan.setText(recordsComponent.getNama_makanan());
         viewHolder.txtWaktu.setText(recordsComponent.getWaktu());
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

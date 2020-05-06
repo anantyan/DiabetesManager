@@ -28,7 +28,7 @@
                 android:layout_marginBottom="16dp"
                 android:text="Formulir Masuk"/>
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="320dp"
                 android:layout_height="wrap_content">
 
@@ -39,7 +39,7 @@
                     android:layout_margin="4dp"
                     android:hint="Masukan Nomor HP"
                     android:inputType="number" />
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
             <Button
                 android:id="@+id/_btn_login"

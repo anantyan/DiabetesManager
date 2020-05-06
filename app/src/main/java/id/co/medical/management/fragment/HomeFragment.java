@@ -1,31 +1,22 @@
 package id.co.medical.management.fragment;
 
-import android.Manifest;
-import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.RestrictionEntry;
-import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
-import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import com.google.android.material.snackbar.Snackbar;
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
+import androidx.core.content.ContextCompat;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -33,19 +24,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import java.util.List;
-import java.util.Objects;
 
 import id.co.medical.management.R;
-import id.co.medical.management.activity.LoginActivity;
-import id.co.medical.management.activity.MainActivity;
 import id.co.medical.management.activity.ProfileActivity;
 import id.co.medical.management.api.AuthApi;
 import id.co.medical.management.api.KaloriApi;
@@ -142,8 +128,8 @@ public class HomeFragment extends Fragment {
                                 case "1":
                                     if(records != null){
                                         RecordsComponent recordsComponent = records.get(0);
-                                        String name = recordsComponent.getName();
-                                        String nomorHP = recordsComponent.getNomorHP();
+                                        String name = recordsComponent.getNama();
+                                        String nomorHP = recordsComponent.getNomor_hp();
                                         String photoProfile = null;
                                         Intent i = new Intent(rootView.getContext(), ProfileActivity.class);
                                         Bundle b = new Bundle();
@@ -253,9 +239,9 @@ public class HomeFragment extends Fragment {
                     if(records != null) {
                         RecordsComponent recordsComponent = records.get(0);
                         String kalori = recordsComponent.getKalori();
-                        String name = recordsComponent.getName();
-                        String nomorHP = recordsComponent.getNomorHP();
-                        String targetKalori = recordsComponent.getTargetKalori();
+                        String name = recordsComponent.getNama();
+                        String nomorHP = recordsComponent.getNomor_hp();
+                        String targetKalori = recordsComponent.getTarget_kalori();
                         String photoProfile = null;
                         switch (error) {
                             case "1": {
